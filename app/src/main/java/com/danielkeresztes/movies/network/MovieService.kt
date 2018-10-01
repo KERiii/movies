@@ -46,6 +46,9 @@ interface MovieService {
                       @Query("page") page: Int):
             Single<MoviesResponse>
 
+    @GET("search/movie")
+    fun search(@Query("api_key") apiKey: String, @Query("query") query: String): Single<MoviesResponse>
+
     @GET("configuration")
     fun configuration(@Query("api_key") apiKey: String): Single<ConfigurationResponse>
 

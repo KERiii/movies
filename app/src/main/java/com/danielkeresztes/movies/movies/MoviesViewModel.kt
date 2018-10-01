@@ -26,6 +26,17 @@ class MoviesViewModel(context: Application) : AndroidViewModel(context) {
         return moviesMutableLiveData
     }
 
+    fun search(query: String): LiveData<MoviesResponse> {
+        val searchMutableLiveData: MutableLiveData<MoviesResponse> = MutableLiveData()
+
+        compositeDisposable.add(moviesRepository
+                .getSearch(query)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { response -> searchMutableLiveData.postValue(response)})
+
+        return searchMutableLiveData
+    }
+
     override fun onCleared() {
         super.onCleared()
         compositeDisposable.clear()

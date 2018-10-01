@@ -13,7 +13,7 @@ class MoviesRepository {
         const val API_KEY: String = "c8373d0d8fd24037653947c11528e21b"
     }
 
-    val movieService by lazy {
+    private val movieService by lazy {
         MovieService.create()
     }
 
@@ -24,6 +24,10 @@ class MoviesRepository {
 
     fun getConfig(): Single<ConfigurationResponse> {
         return movieService.configuration(API_KEY)
+                .subscribeOn(Schedulers.io())
+    }
+    fun getSearch(query: String): Single<MoviesResponse> {
+        return movieService.search(API_KEY, query)
                 .subscribeOn(Schedulers.io())
     }
 }
